@@ -1,0 +1,6 @@
+﻿using UnityEngine;
+
+public class SkillIcon : MonoBehaviour
+{
+    public int skillID;
+}
