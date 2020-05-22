@@ -115,6 +115,7 @@ public class FightManager : MonoBehaviour
 
         playerHUD.SetHP(playerUnit.currentHP);
         playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetXp(playerUnit.currentExp);
     }
 
     private void InitializeEnemy()
@@ -132,11 +133,12 @@ public class FightManager : MonoBehaviour
 
         int bossPos = Random.Range(0, availableBosses.Count);
 
+        Debug.Log(enemyPrefabs[availableBosses[bossPos]].GetComponent<EnemyUnit>().unitName);
+
         enemyUnit = Instantiate(enemyPrefabs[availableBosses[bossPos]], enemyBattleStation.position, enemyBattleStation.rotation).GetComponent<EnemyUnit>();
+
         enemyUnit.SetBossStats();
         enemyUnit.SetBossSkills();
-
-        Debug.Log(enemyUnit.equippedSkills[0].SkillName);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
         enemyHUD.SetMP(enemyUnit.currentMP);

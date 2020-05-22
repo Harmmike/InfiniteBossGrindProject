@@ -98,6 +98,13 @@ public class CharacterPanel : MonoBehaviour
 
     private void SavePlayerData()
     {
-        PlayerDataTransfer.SavePlayerData(player);
+        if (PlayerDataTransfer.SavePlayerData(player))
+        {
+            Debug.Log("saved from character panel.");
+        }
+        else
+        {
+            Debug.Log("save failed in character panel");
+        }
     }
 }

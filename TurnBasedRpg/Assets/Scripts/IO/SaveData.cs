@@ -12,8 +12,8 @@ namespace Assets.Scripts.IO
         public float SavedHP;
         public float SavedMP;
         public int SavedGold;
-        public int SavedCurrentXP;
-        public int SavedXpToLvl;
+        public float SavedCurrentXP;
+        public float SavedXpToLvl;
         public int SavedStatPoints;
         public int SavedSkillPoints;
         public List<Skill> SavedKnownSkills = new List<Skill>();

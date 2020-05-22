@@ -15,8 +15,8 @@ public class PlayerDataUnit
 
     public int totalGold;
 
-    public int currentExp;
-    public int expToLevel;
+    public float currentExp;
+    public float expToLevel;
     public int availableStatPoints;
     public int availableSkillPoints;
 

@@ -9,7 +9,7 @@ public static class PlayerDataTransfer
     public static float MaximumHP { get; set; }
     public static float MaximumMP { get; set; }
     public static int TotalGold { get; set; }
-    public static int CurrentExp { get; set; }
+    public static float CurrentExp { get; set; }
     public static int AvailableStatPoints { get; set; }
     public static int AvailableSkillPoints { get; set; }
 

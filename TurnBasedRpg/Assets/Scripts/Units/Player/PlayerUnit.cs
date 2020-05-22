@@ -7,8 +7,8 @@ public class PlayerUnit : Unit
     public event EventHandler<int> OnLevelUp;
 
     public int totalGold;
-    public int currentExp;
-    public int expToLevel;
+    public float currentExp;
+    public float expToLevel;
     public int availableStatPoints;
     public int availableSkillPoints;
 
@@ -29,7 +29,7 @@ public class PlayerUnit : Unit
         if (currentExp >= expToLevel)
         {
             LevelUp();
-            int balance = currentExp - expToLevel;
+            float balance = currentExp - expToLevel;
             currentExp = balance;
         }
     }

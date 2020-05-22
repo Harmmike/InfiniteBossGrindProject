@@ -21,6 +21,9 @@ public class EnemyUnit : Unit
 
        switch (dynamicStatOne)
        {
+            default:
+                break;
+
            case DynamicStats.HP:
                maxHP += statWeight * 10;
                currentHP = maxHP;
@@ -37,6 +40,9 @@ public class EnemyUnit : Unit
 
        switch (dynamicStatTwo)
        {
+            default:
+                break;
+
            case DynamicStats.HP:
                maxHP += statWeight * 10;
                currentHP = maxHP;
