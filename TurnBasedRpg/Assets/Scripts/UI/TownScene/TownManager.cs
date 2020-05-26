@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TownManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class TownManager : MonoBehaviour
     public GameObject availableSkillsPanel;
     public GameObject newSkillsPanel;
     public GameObject saveSuccessPanel;
+
+    public Button megaBossButton;
+    public Button normalBossButton;
 
     public List<GameObject> allPanels = new List<GameObject>();
 
@@ -20,9 +24,14 @@ public class TownManager : MonoBehaviour
         allPanels.Add(saveSuccessPanel);
     }
 
-    public void NewFight_Button()
+    public void NormalBoss_Button()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void MegaBoss_Button()
+    {
+        SceneManager.LoadScene(3);
     }
 
     public void Character_Button()
@@ -31,6 +40,9 @@ public class TownManager : MonoBehaviour
         {
             return;
         }
+
+        megaBossButton.gameObject.SetActive(false);
+        normalBossButton.gameObject.SetActive(false);
 
         characterPanel.GetComponent<CharacterPanel>().UpdateTextFields();
 
@@ -44,6 +56,9 @@ public class TownManager : MonoBehaviour
             return;
         }
 
+        megaBossButton.gameObject.SetActive(false);
+        normalBossButton.gameObject.SetActive(false);
+
         availableSkillsPanel.GetComponent<AvailableSkills_UI>().UpdateUI();
 
         availableSkillsPanel.SetActive(true);
@@ -55,6 +70,9 @@ public class TownManager : MonoBehaviour
         {
             return;
         }
+
+        megaBossButton.gameObject.SetActive(false);
+        normalBossButton.gameObject.SetActive(false);
 
         newSkillsPanel.GetComponent<NewSkillsPanel>().UpdateUI();
 

@@ -127,20 +127,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 
   unitLevel: 0
-  dynamicStatOne: 0
-  dynamicStatTwo: 0
   unitPower: 0
+  unitIntelligence: 0
   unitSpeed: 0
   maxHP: 0
   currentHP: 0
-  maxMP: 0
-  currentMP: 0
+  animations: {fileID: 0}
+  equippedSkills: []
   totalGold: 0
   currentExp: 0
   expToLevel: 0
   availableStatPoints: 0
   availableSkillPoints: 0
-  rewardGold: 0
-  rewardExp: 0
   knownSkills: []
-  equippedSkills: []

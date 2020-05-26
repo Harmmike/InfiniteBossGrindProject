@@ -16,12 +16,14 @@ public enum FightState
 public class FightManager : MonoBehaviour
 {
     public FightState state;
+    public bool megaBoss;
 
     public Text roundDisplayText;
     public float currentRound;
 
     public GameObject playerPrefab;
-    public List<GameObject> enemyPrefabs;
+    public GameObject normalBossPrefab;
+    public List<GameObject> megaBosses;
 
     public Sprite[] enemyImages;
 
@@ -53,11 +55,37 @@ public class FightManager : MonoBehaviour
     public Slider enemyMPSlider;
     public BattleHUD enemyHUD;
     public GameObject enemyTurnIndicator;
+
+    public Sprite[] bossIcons;
+
+    public List<string> bossNamePrefixes = new List<string>()
+    {
+        "Chris The",
+        "John The",
+        "The",
+        "Inglorious",
+        "Judicator",
+        "Dark",
+        "King",
+        "Queen",
+    };
+    public List<string> bossNameSuffixes = new List<string>()
+    {
+        "Eradicator",
+        "Insane",
+        "Of Blades",
+        "Inquisitor",
+        "Fallen",
+        "Impaler",
+        "Aggressor",
+        "Destructor"
+    };
     #endregion
 
     private void Start()
     {
         state = FightState.START;
+
         StartCoroutine(InitializeFight());
 
         currentRound = 1;
@@ -67,9 +95,17 @@ public class FightManager : MonoBehaviour
     #region Initialization
     private IEnumerator InitializeFight()
     {
-        InitializePlayer();
-        InitializeEnemy();
-        
+        if (megaBoss)
+        {
+            InitializePlayer();
+            InitializeMegaBoss();
+        }
+        else
+        {
+            InitializePlayer();
+            InitializeNormalBoss();
+        }
+
         UpdateHUDS();
 
         yield return new WaitForSeconds(2f);
@@ -88,11 +124,11 @@ public class FightManager : MonoBehaviour
         playerUnit.unitName = playerData.unitName;
         playerUnit.unitLevel = playerData.unitLevel;
         playerUnit.unitPower = playerData.unitPower;
-        playerUnit.unitSpeed = playerData.unitSpeed;
+        playerUnit.unitDex = playerData.unitSpeed;
         playerUnit.maxHP = playerData.maxHP;
         playerUnit.currentHP = playerData.maxHP;
-        playerUnit.maxMP = playerData.maxMP;
-        playerUnit.currentMP = 0;
+        playerUnit.unitIntelligence = playerData.unitIntelligence;
+        //playerUnit.currentMP = 0;
         playerUnit.currentExp = playerData.currentExp;
         playerUnit.expToLevel = playerData.expToLevel;
         playerUnit.totalGold = playerData.totalGold;
@@ -114,37 +150,61 @@ public class FightManager : MonoBehaviour
         }
 
         playerHUD.SetHP(playerUnit.currentHP);
-        playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetMP(playerUnit.CurrentMP);
+        playerHUD.SetXp(playerUnit.currentExp);
     }
 
-    private void InitializeEnemy()
+    private void InitializeNormalBoss()
     {
-        List<int> availableBosses = new List<int>();
+        enemyUnit = Instantiate(normalBossPrefab, enemyBattleStation.position, enemyBattleStation.rotation).GetComponent<EnemyUnit>();
 
-        foreach (var enemy in enemyPrefabs)
+        //Random icon and name
+        enemyUnit.GetComponentInChildren<SpriteRenderer>().sprite = enemyImages[Random.Range(0, enemyImages.Length)];
+        enemyUnit.unitName = $"{bossNamePrefixes[Random.Range(0, bossNamePrefixes.Count)]} {bossNameSuffixes[Random.Range(0, bossNameSuffixes.Count)]}";
+
+        enemyUnit.unitLevel = Random.Range(1, playerUnit.unitLevel + 2);
+
+        enemyUnit.InitializeBossSettings();
+
+        enemyHUD.SetHP(enemyUnit.currentHP);
+        enemyHUD.SetMP(enemyUnit.CurrentMP);
+    }
+
+    private void InitializeMegaBoss()
+    {
+        List<EnemyUnit> availableBosses = new List<EnemyUnit>();
+
+        foreach (var bossObject in megaBosses)
         {
-            Unit boss = enemy.GetComponent<Unit>();
-            if (boss.unitLevel <= playerUnit.unitLevel + 2 && boss.unitLevel >= playerUnit.unitLevel - 3)
+            var boss = bossObject.GetComponent<EnemyUnit>();
+
+            if(boss.unitLevel <= playerUnit.unitLevel + 10)
             {
-                availableBosses.Add(enemyPrefabs.IndexOf(enemy));
+                availableBosses.Add(boss);
             }
         }
 
-        int bossPos = Random.Range(0, availableBosses.Count);
+        int nextBossPos = Random.Range(0, availableBosses.Count);
 
-        enemyUnit = Instantiate(enemyPrefabs[availableBosses[bossPos]], enemyBattleStation.position, enemyBattleStation.rotation).GetComponent<EnemyUnit>();
-        enemyUnit.SetBossStats();
-        enemyUnit.SetBossSkills();
+        if(availableBosses[nextBossPos] == null)
+        {
+            InitializeMegaBoss();
+            return;
+        }
+        else
+        {
+            enemyUnit = Instantiate(availableBosses[nextBossPos], enemyBattleStation.position, enemyBattleStation.rotation).GetComponent<EnemyUnit>();
 
-        Debug.Log(enemyUnit.equippedSkills[0].SkillName);
+            enemyUnit.InitializeBossSettings();
 
-        enemyHUD.SetHP(enemyUnit.currentHP);
-        enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetHP(enemyUnit.currentHP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
+        }
     }
 
     private void CalculateFirstTurn()
     {
-        if(playerUnit.unitSpeed <= enemyUnit.unitSpeed)
+        if(playerUnit.unitDex <= enemyUnit.unitDex)
         {
             state = FightState.ENEMYTURN;
             StartCoroutine(EnemyTurn());
@@ -207,7 +267,7 @@ public class FightManager : MonoBehaviour
         bool isDead = BattleLogicManager.PerformNormalAttack(playerUnit, enemyUnit);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetMP(playerUnit.CurrentMP);
 
         yield return new WaitForSeconds(2f);
 
@@ -221,9 +281,9 @@ public class FightManager : MonoBehaviour
         else
         {
             enemyHUD.SetHP(enemyUnit.currentHP);
-            enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
             playerHUD.SetHP(playerUnit.currentHP);
-            playerHUD.SetMP(playerUnit.currentMP);
+            playerHUD.SetMP(playerUnit.CurrentMP);
 
             StartCoroutine(EnemyTurn());
         }
@@ -238,7 +298,7 @@ public class FightManager : MonoBehaviour
         bool isDead = BattleLogicManager.AttackWithSkill(playerUnit, enemyUnit, playerUnit.equippedSkills[0]);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetMP(playerUnit.CurrentMP);
 
         yield return new WaitForSeconds(2f);
 
@@ -252,9 +312,9 @@ public class FightManager : MonoBehaviour
         else
         {
             enemyHUD.SetHP(enemyUnit.currentHP);
-            enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
             playerHUD.SetHP(playerUnit.currentHP);
-            playerHUD.SetMP(playerUnit.currentMP);
+            playerHUD.SetMP(playerUnit.CurrentMP);
 
             StartCoroutine(EnemyTurn());
         }
@@ -267,7 +327,7 @@ public class FightManager : MonoBehaviour
         bool isDead = BattleLogicManager.AttackWithSkill(playerUnit, enemyUnit, playerUnit.equippedSkills[1]);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetMP(playerUnit.CurrentMP);
 
         yield return new WaitForSeconds(2f);
 
@@ -281,9 +341,9 @@ public class FightManager : MonoBehaviour
         else
         {
             enemyHUD.SetHP(enemyUnit.currentHP);
-            enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
             playerHUD.SetHP(playerUnit.currentHP);
-            playerHUD.SetMP(playerUnit.currentMP);
+            playerHUD.SetMP(playerUnit.CurrentMP);
 
             StartCoroutine(EnemyTurn());
         }
@@ -296,7 +356,7 @@ public class FightManager : MonoBehaviour
         bool isDead = BattleLogicManager.AttackWithSkill(playerUnit, enemyUnit, playerUnit.equippedSkills[2]);
 
         enemyHUD.SetHP(enemyUnit.currentHP);
-        playerHUD.SetMP(playerUnit.currentMP);
+        playerHUD.SetMP(playerUnit.CurrentMP);
 
         yield return new WaitForSeconds(2f);
 
@@ -310,9 +370,9 @@ public class FightManager : MonoBehaviour
         else
         {
             enemyHUD.SetHP(enemyUnit.currentHP);
-            enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
             playerHUD.SetHP(playerUnit.currentHP);
-            playerHUD.SetMP(playerUnit.currentMP);
+            playerHUD.SetMP(playerUnit.CurrentMP);
 
             StartCoroutine(EnemyTurn());
         }
@@ -351,7 +411,7 @@ public class FightManager : MonoBehaviour
 
         foreach (var skill in enemyUnit.equippedSkills)
         {
-            if (enemyUnit.currentMP >= skill.EnergyCost && skillUsed == false)
+            if (enemyUnit.CurrentMP >= skill.EnergyCost && skillUsed == false)
             {
                 int attackChoice = Random.Range(0, 2);
 
@@ -369,7 +429,7 @@ public class FightManager : MonoBehaviour
         }
 
         playerHUD.SetHP(playerUnit.currentHP);
-        enemyHUD.SetMP(enemyUnit.currentMP);
+        enemyHUD.SetMP(enemyUnit.CurrentMP);
 
         yield return new WaitForSeconds(1f);
 
@@ -381,9 +441,9 @@ public class FightManager : MonoBehaviour
         else
         {
             enemyHUD.SetHP(enemyUnit.currentHP);
-            enemyHUD.SetMP(enemyUnit.currentMP);
+            enemyHUD.SetMP(enemyUnit.CurrentMP);
             playerHUD.SetHP(playerUnit.currentHP);
-            playerHUD.SetMP(playerUnit.currentMP);
+            playerHUD.SetMP(playerUnit.CurrentMP);
 
             state = FightState.PLAYERTURN;
             StartCoroutine(PlayerTurn());

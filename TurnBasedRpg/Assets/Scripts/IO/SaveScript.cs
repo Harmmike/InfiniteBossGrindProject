@@ -14,9 +14,9 @@ public static class SaveScript
                 SavedName = player.unitName,
                 SavedLevel = player.unitLevel,
                 SavedHP = player.maxHP,
-                SavedMP = player.maxMP,
+                SavedIntelligence = player.unitIntelligence,
                 SavedPower = player.unitPower,
-                SavedSpeed = player.unitSpeed,
+                SavedDex = player.unitSpeed,
                 SavedCurrentXP = player.currentExp,
                 SavedXpToLvl = player.expToLevel,
                 SavedGold = player.totalGold,
@@ -53,9 +53,9 @@ public static class SaveScript
             newPlayer.unitLevel = save.SavedLevel;
             newPlayer.maxHP = save.SavedHP;
             newPlayer.currentHP = save.SavedHP;
-            newPlayer.maxMP = save.SavedMP;
-            newPlayer.currentMP = save.SavedMP;
-            newPlayer.unitSpeed = save.SavedSpeed;
+            newPlayer.unitIntelligence = save.SavedIntelligence;
+            newPlayer.currentMP = save.SavedIntelligence;
+            newPlayer.unitSpeed = save.SavedDex;
             newPlayer.availableStatPoints = save.SavedStatPoints;
             newPlayer.unitPower = save.SavedPower;
             newPlayer.expToLevel = save.SavedXpToLvl;

@@ -8,9 +8,9 @@ namespace Assets.Scripts.IO
         public string SavedName;
         public int SavedLevel;
         public int SavedPower;
-        public int SavedSpeed;
+        public int SavedDex;
         public float SavedHP;
-        public float SavedMP;
+        public int SavedIntelligence;
         public int SavedGold;
         public int SavedCurrentXP;
         public int SavedXpToLvl;

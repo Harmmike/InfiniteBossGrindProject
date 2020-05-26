@@ -7,7 +7,7 @@ public static class PlayerDataTransfer
     public static int UnitPower { get; set; }
     public static int UnitSpeed { get; set; }
     public static float MaximumHP { get; set; }
-    public static float MaximumMP { get; set; }
+    public static int UnitIntelligence { get; set; }
     public static int TotalGold { get; set; }
     public static int CurrentExp { get; set; }
     public static int AvailableStatPoints { get; set; }
@@ -25,9 +25,9 @@ public static class PlayerDataTransfer
             UnitName = playerData.unitName;
             UnitLevel = playerData.unitLevel;
             UnitPower = playerData.unitPower;
-            UnitSpeed = playerData.unitSpeed;
+            UnitSpeed = playerData.unitDex;
             MaximumHP = playerData.maxHP;
-            MaximumMP = playerData.maxMP;
+            UnitIntelligence = playerData.unitIntelligence;
             CurrentExp = playerData.currentExp;
             TotalGold = playerData.totalGold;
             AvailableStatPoints = playerData.availableStatPoints;
@@ -56,7 +56,7 @@ public static class PlayerDataTransfer
             UnitPower = playerData.unitPower;
             UnitSpeed = playerData.unitSpeed;
             MaximumHP = playerData.maxHP;
-            MaximumMP = playerData.maxMP;
+            UnitIntelligence = playerData.unitIntelligence;
             CurrentExp = playerData.currentExp;
             TotalGold = playerData.totalGold;
             AvailableStatPoints = playerData.availableStatPoints;
@@ -83,7 +83,7 @@ public static class PlayerDataTransfer
         newUnit.unitSpeed = UnitSpeed;
         newUnit.maxHP = MaximumHP;
         newUnit.currentHP = MaximumHP;
-        newUnit.maxMP = MaximumMP;
+        newUnit.unitIntelligence = UnitIntelligence;
         newUnit.currentMP = 0;
         newUnit.currentExp = CurrentExp;
         newUnit.expToLevel = UnitLevel * 50;
