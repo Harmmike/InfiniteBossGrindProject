@@ -150,12 +150,8 @@ public class FightManager : MonoBehaviour
         }
 
         playerHUD.SetHP(playerUnit.currentHP);
-<<<<<<< Updated upstream
-        playerHUD.SetMP(playerUnit.currentMP);
-=======
         playerHUD.SetMP(playerUnit.CurrentMP);
         playerHUD.SetXp(playerUnit.currentExp);
->>>>>>> Stashed changes
     }
 
     private void InitializeNormalBoss()
@@ -188,18 +184,6 @@ public class FightManager : MonoBehaviour
             }
         }
 
-<<<<<<< Updated upstream
-        int bossPos = Random.Range(0, availableBosses.Count);
-
-        enemyUnit = Instantiate(enemyPrefabs[availableBosses[bossPos]], enemyBattleStation.position, enemyBattleStation.rotation).GetComponent<EnemyUnit>();
-        enemyUnit.SetBossStats();
-        enemyUnit.SetBossSkills();
-
-        Debug.Log(enemyUnit.equippedSkills[0].SkillName);
-
-        enemyHUD.SetHP(enemyUnit.currentHP);
-        enemyHUD.SetMP(enemyUnit.currentMP);
-=======
         int nextBossPos = Random.Range(0, availableBosses.Count);
 
         if(availableBosses[nextBossPos] == null)
@@ -216,7 +200,6 @@ public class FightManager : MonoBehaviour
             enemyHUD.SetHP(enemyUnit.currentHP);
             enemyHUD.SetMP(enemyUnit.CurrentMP);
         }
->>>>>>> Stashed changes
     }
 
     private void CalculateFirstTurn()

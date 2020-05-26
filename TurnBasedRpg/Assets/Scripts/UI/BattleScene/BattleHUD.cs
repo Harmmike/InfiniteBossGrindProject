@@ -8,6 +8,7 @@ public class BattleHUD : MonoBehaviour
 
     public Slider unitHPSlider;
     public Slider unitMPSlider;
+    public Slider unitXpSlider;
 
     public Text unitHpDisplayText;
     public Text unitMpDisplayText;
@@ -26,9 +27,6 @@ public class BattleHUD : MonoBehaviour
         unitHpDisplayText.text = $"{unit.currentHP} / {unit.maxHP}";
         unitMpDisplayText.text = $"{unit.CurrentMP} / {unit.MaxMP}";
         unitMaxHp = unit.maxHP;
-<<<<<<< Updated upstream
-        unitMaxMp = unit.maxMP;
-=======
         unitMaxMp = unit.MaxMP;
 
         if (typeof(PlayerUnit).IsAssignableFrom(unit.GetType()))
@@ -41,7 +39,6 @@ public class BattleHUD : MonoBehaviour
         {
             unitXpSlider = null;
         }
->>>>>>> Stashed changes
     }
 
     public void SetHP(float hp)
@@ -54,5 +51,10 @@ public class BattleHUD : MonoBehaviour
     {
         unitMPSlider.value = mp;
         unitMpDisplayText.text = $"{mp} / {unitMaxMp}";
+    }
+
+    public void SetXp(int xp)
+    {
+        unitXpSlider.value = xp;
     }
 }

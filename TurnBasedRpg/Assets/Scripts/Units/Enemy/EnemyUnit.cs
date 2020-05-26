@@ -69,14 +69,15 @@ public class EnemyUnit : Unit
 
         int statWeight = Mathf.RoundToInt(bossSkillPoints / 2);
 
-<<<<<<< Updated upstream
-       switch (dynamicStatOne)
-       {
-           case DynamicStats.HP:
-               maxHP += statWeight * 10;
-               currentHP = maxHP;
-               break;
-=======
+
+        switch (dynamicStatOne)
+        {
+            case DynamicStats.HP:
+                maxHP += statWeight * 10;
+                currentHP = maxHP;
+                break;
+        }
+
         //for primary stat we're adding 1 to the floor'd int.
         switch (dynamicStatOne)
         {
@@ -91,7 +92,6 @@ public class EnemyUnit : Unit
             case DynamicStats.INTELLIGENCE:
                 unitIntelligence += (statWeight + 1) * 2;
                 break;
->>>>>>> Stashed changes
 
             case DynamicStats.POWER:
                 unitPower += (statWeight + 1) * 2;
@@ -102,14 +102,14 @@ public class EnemyUnit : Unit
                 break;
         }
 
-<<<<<<< Updated upstream
-       switch (dynamicStatTwo)
-       {
-           case DynamicStats.HP:
-               maxHP += statWeight * 10;
-               currentHP = maxHP;
-               break;
-=======
+        switch (dynamicStatTwo)
+        {
+            case DynamicStats.HP:
+                maxHP += statWeight * 10;
+                currentHP = maxHP;
+                break;
+        }
+
         switch (dynamicStatTwo)
         {
             default:
@@ -127,7 +127,6 @@ public class EnemyUnit : Unit
             case DynamicStats.POWER:
                 unitPower += statWeight * 2;
                 break;
->>>>>>> Stashed changes
 
             case DynamicStats.DEX:
                 unitDex += statWeight;
