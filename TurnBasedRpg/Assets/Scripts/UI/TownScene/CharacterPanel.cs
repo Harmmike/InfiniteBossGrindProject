@@ -19,7 +19,7 @@ public class CharacterPanel : MonoBehaviour
         levelText.text = PlayerDataTransfer.UnitLevel.ToString();
         healthText.text = PlayerDataTransfer.MaximumHP.ToString();
         powerText.text = PlayerDataTransfer.UnitPower.ToString();
-        manaText.text = PlayerDataTransfer.MaximumMP.ToString();
+        manaText.text = PlayerDataTransfer.UnitIntelligence.ToString();
         speedText.text = PlayerDataTransfer.UnitSpeed.ToString();
         statPointsText.text = $"Stat Points: {PlayerDataTransfer.AvailableStatPoints}";
     }
@@ -64,7 +64,7 @@ public class CharacterPanel : MonoBehaviour
         }
         else
         {
-            player.maxMP += 3;
+            player.unitIntelligence += 3;
             player.availableStatPoints--;
 
             SavePlayerData();
@@ -94,6 +94,10 @@ public class CharacterPanel : MonoBehaviour
         SavePlayerData();
 
         this.gameObject.SetActive(false);
+
+        TownManager townManager = FindObjectOfType<TownManager>();
+        townManager.megaBossButton.gameObject.SetActive(true);
+        townManager.normalBossButton.gameObject.SetActive(true);
     }
 
     private void SavePlayerData()

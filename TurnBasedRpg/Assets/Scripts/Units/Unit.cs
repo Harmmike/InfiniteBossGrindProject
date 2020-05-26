@@ -2,30 +2,61 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class Unit : MonoBehaviour
 {
     public string unitName;
     public int unitLevel;
 
     public int unitPower;
-    public int unitSpeed;
+    public int unitIntelligence;
+    public int unitDex;
 
     public float maxHP;
     public float currentHP;
-    public float maxMP;
-    public float currentMP;
 
-    
+    private float currentMP;
+
+    public float MaxMP
+    {
+        get { return unitIntelligence * 0.5f; }
+    }
+    public float CurrentMP { 
+        get 
+        { return currentMP; }
+    }
+
+    public int PhysicalDefense
+    {
+        get
+        {
+            return (unitPower + unitDex) / 2;
+        }
+    }
+
+    public int MagicDefense
+    {
+        get
+        {
+            return (unitIntelligence + unitDex) / 2;
+        }
+    }
+    //public float maxMP;
+    //public float currentMP;
+
     public List<Skill> equippedSkills = new List<Skill>();
 
     #region Combat
     public bool TakePhysicalDamage(float amountOfDamage)
     {
         //TODO: add defense
-        currentHP -= amountOfDamage;
+        var reducedDamage = amountOfDamage - PhysicalDefense;
+
+        if(reducedDamage < 1)
+        {
+            reducedDamage = 1;
+        }
+
+        currentHP -= reducedDamage;
 
         return IsDead();
     }
@@ -54,15 +85,22 @@ public class Unit : MonoBehaviour
     {
         currentMP += amountOfEnergy;
 
-        if(currentMP >= maxMP)
+        if(currentMP >= MaxMP)
         {
-            currentMP = maxMP;
+            currentMP = MaxMP;
         }
     }
 
     public bool TakeMagicDamage(float amountOfDamage)
     {
-        currentHP -= amountOfDamage;
+        var reducedDamage = amountOfDamage - MagicDefense;
+
+        if(reducedDamage < 1)
+        {
+            reducedDamage = 1;
+        }
+
+        currentHP -= reducedDamage;
 
         return IsDead();
     }

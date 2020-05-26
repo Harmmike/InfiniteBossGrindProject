@@ -10,7 +10,7 @@ public class PlayerDataUnit
 
     public float maxHP;
     public float currentHP;
-    public float maxMP;
+    public int unitIntelligence;
     public float currentMP;
 
     public int totalGold;

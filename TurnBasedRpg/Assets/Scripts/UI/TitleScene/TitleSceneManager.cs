@@ -56,7 +56,7 @@ public class TitleSceneManager : MonoBehaviour
         newPlayer.unitLevel = 1;
         newPlayer.unitPower = 10;
         newPlayer.maxHP = 50;
-        newPlayer.maxMP = 10;
+        newPlayer.unitIntelligence = 10;
         newPlayer.unitSpeed = 2;
         newPlayer.expToLevel = 50;
         newPlayer.currentExp = 0;

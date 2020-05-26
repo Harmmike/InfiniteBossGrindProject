@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,6 +86,33 @@ public class AvailableSkills_UI : MonoBehaviour
         PlayerDataTransfer.SavePlayerData(player);
 
         this.gameObject.SetActive(false);
+
+        int availableSkillCount = player.knownSkills.Count;
+        int equippedSkillCount = player.equippedSkills.Count;
+
+        if (availableSkillCount != 0)
+        {
+            var skillSlots = availableSkillsList.GetComponentsInChildren<SkillSlot>();
+
+            foreach (var skill in skillSlots)
+            {
+                Destroy(skill.gameObject);
+            }
+        }
+
+        if(equippedSkillCount != 0)
+        {
+            var skillSlots = equippedSkillsList.GetComponentsInChildren<SkillSlot>();
+
+            foreach (var skill in skillSlots)
+            {
+                Destroy(skill.gameObject);
+            }
+        }
+
+        TownManager townManager = FindObjectOfType<TownManager>();
+        townManager.megaBossButton.gameObject.SetActive(true);
+        townManager.normalBossButton.gameObject.SetActive(true);
     }
 
     public void ClearSkills_Button()

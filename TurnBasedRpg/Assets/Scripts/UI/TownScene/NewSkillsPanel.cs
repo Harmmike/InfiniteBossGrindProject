@@ -80,5 +80,9 @@ public class NewSkillsPanel : MonoBehaviour
     public void ClosePanel()
     {
         this.gameObject.SetActive(false);
+
+        TownManager townManager = FindObjectOfType<TownManager>();
+        townManager.megaBossButton.gameObject.SetActive(true);
+        townManager.normalBossButton.gameObject.SetActive(true);
     }
 }
