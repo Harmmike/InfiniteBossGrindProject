@@ -10,6 +10,7 @@ public class TownManager : MonoBehaviour
     public GameObject availableSkillsPanel;
     public GameObject newSkillsPanel;
     public GameObject saveSuccessPanel;
+    public GameObject leaderboardPanel;
 
     public Button megaBossButton;
     public Button normalBossButton;
@@ -22,6 +23,7 @@ public class TownManager : MonoBehaviour
         allPanels.Add(availableSkillsPanel);
         allPanels.Add(newSkillsPanel);
         allPanels.Add(saveSuccessPanel);
+        allPanels.Add(leaderboardPanel);
     }
 
     public void NormalBoss_Button()
@@ -114,6 +116,31 @@ public class TownManager : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         saveSuccessPanel.SetActive(false);
+    }
+    #endregion
+
+    #region Online
+    public void Leaderboards_Button()
+    {
+        
+        //if (CheckForOpenPanels())
+        //{
+        //    return;
+        //}
+
+        megaBossButton.gameObject.SetActive(false);
+        normalBossButton.gameObject.SetActive(false);
+
+        Debug.Log("Leaderboards button");
+
+        leaderboardPanel.SetActive(true);
+        leaderboardPanel.GetComponent<LeaderboardPanel>().UpdateBoard();
+    }
+
+    public void OnlineSave_Button()
+    {
+        Debug.Log("Online save");
+        StartCoroutine(SaveSuccessRoutine());
     }
     #endregion
 }

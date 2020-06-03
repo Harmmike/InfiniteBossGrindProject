@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 714c8e308487185428c717c754536730
   - enabled: 1
-    path: Assets/Scenes/TownScene.unity
+    path: Assets/Scenes/OfflineTownScene.unity
     guid: c4c1891439824084a8935b368a77c931
   - enabled: 1
     path: Assets/Scenes/NormalBattleScene.unity
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MegaBattleScene2.unity
     guid: 7731bdcb7e20bb34f81624a7263334ca
+  - enabled: 1
+    path: Assets/Scenes/OnlineTownScene.unity
+    guid: aa9228c64f7f53b4ba1f1c847861e726
   m_configObjects: {}

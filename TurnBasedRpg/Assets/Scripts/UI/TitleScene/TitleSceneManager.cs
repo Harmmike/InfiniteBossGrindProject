@@ -5,6 +5,13 @@ public class TitleSceneManager : MonoBehaviour
 {
     public GameObject mainButtonPanel;
     public GameObject newGamePanel;
+    public GameObject mainOnlinePanel;
+
+    public GameObject onlinePanel;
+    public GameObject loginPanel;
+    public GameObject registerPanel;
+
+    public LoginScript loginController;
 
     #region Buttons
     public void NewGame_Button()
@@ -25,9 +32,49 @@ public class TitleSceneManager : MonoBehaviour
         }
     }
 
+    public void OnlineGame_Button()
+    {
+        Debug.Log("online game button pressed");
+
+        mainButtonPanel.SetActive(false);
+        mainOnlinePanel.SetActive(true);
+        onlinePanel.SetActive(true);
+
+        //StartCoroutine(loginController.ProcessRequest("Test1", "testPassword"));
+        //loginController.ProcessRequest("Test", "testPassword");
+    }
+
     public void Menu_Button()
     {
         Debug.Log("Open menu");
+    }
+    #endregion
+
+    #region Online Stuff
+    public void OnlinePanel_Login_Button()
+    {
+        onlinePanel.SetActive(false);
+        registerPanel.SetActive(false);
+
+        loginPanel.SetActive(true);
+    }
+
+    public void OnlinePanel_Register_Button()
+    {
+        onlinePanel.SetActive(false);
+        loginPanel.SetActive(false);
+
+        registerPanel.SetActive(true);
+    }
+
+    public void OnlinePanel_Back_Button()
+    {
+        loginPanel.SetActive(false);
+        registerPanel.SetActive(false);
+        mainOnlinePanel.SetActive(false);
+        onlinePanel.SetActive(true);
+
+        mainButtonPanel.SetActive(true);
     }
     #endregion
 
