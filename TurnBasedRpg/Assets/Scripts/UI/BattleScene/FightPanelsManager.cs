@@ -49,7 +49,14 @@ public class FightPanelsManager : MonoBehaviour
 
         levelUpIndicator.SetActive(false);
 
-        SceneManager.LoadScene(1);
+        if (!PlayerDataTransfer.IsOnline)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            SceneManager.LoadScene(4);
+        }
     }
 
     public void FightAgain_Button()

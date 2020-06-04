@@ -1,11 +1,14 @@
 ﻿using Assets.Scripts.IO;
+using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public static class SaveScript
 {
-    private static string filePath = Application.persistentDataPath + "/playersave.save";
+    private static readonly string filePath = Application.persistentDataPath + "/playersave.save";
+    private static readonly string SAVEPLAYER_URL = "https://harmsoft.000webhostapp.com/saveplayer.php";
 
     public static void SaveData(PlayerDataUnit player)
     {
@@ -73,5 +76,38 @@ public static class SaveScript
             Debug.LogWarning("Save file doesn't exist");
             return false;
         }
+    }
+
+    public static IEnumerator OnlineSaveData(PlayerDataUnit player)
+    {
+        Debug.Log("starting OnlineSaveData()");
+
+        WWWForm form = new WWWForm();
+        form.AddField("username", player.unitName);
+        form.AddField("level", player.unitLevel);
+        form.AddField("power", player.unitPower);
+        form.AddField("speed", player.unitSpeed);
+        form.AddField("maxhp", player.maxHP.ToString());
+        form.AddField("intelligence", player.unitIntelligence);
+        form.AddField("gold", player.totalGold);
+        form.AddField("exp", player.currentExp);
+        form.AddField("statpoints", player.availableStatPoints);
+        form.AddField("skillpoints", player.availableSkillPoints);
+
+        using (UnityWebRequest request = UnityWebRequest.Post(SAVEPLAYER_URL, form))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+            }
+        }
+
+        Debug.Log("finished OnlineSaveData()");
     }
 }

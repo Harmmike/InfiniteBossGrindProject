@@ -28,8 +28,8 @@ public class PlayerUnit : Unit
 
         if (currentExp >= expToLevel)
         {
-            LevelUp();
             int balance = currentExp - expToLevel;
+            LevelUp();
             currentExp = balance;
         }
     }

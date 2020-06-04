@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class LeaderboardPanel : MonoBehaviour
 {
@@ -13,12 +14,27 @@ public class LeaderboardPanel : MonoBehaviour
     public GameObject playerContainerPrefab;
     public GameObject scrollableArea;
 
+    public GameObject loadingIcon;
+    public Image loadingIconImage;
+
+    private void Update()
+    {
+        //float imageFill = 0;
+
+        //loadingIconImage.fillAmount = imageFill;
+
+        //imageFill += Time.deltaTime;
+    }
+
     public void UpdateBoard()
     {
-        Debug.Log("updating leaderboards");
+        ClearPreviousList();
+
+        loadingIcon.SetActive(true);
 
         players.Clear();
         
+
 
         StartCoroutine(GetPlayersFromDB());
     }
@@ -36,6 +52,8 @@ public class LeaderboardPanel : MonoBehaviour
             }
             else
             {
+                
+
                 WebParser parser = GetComponent<WebParser>();
 
                 players = parser.ParseLeaderboardData(request.downloadHandler.text);
@@ -45,8 +63,20 @@ public class LeaderboardPanel : MonoBehaviour
         }
     }
 
+    private void ClearPreviousList()
+    {
+        var playerObjects = scrollableArea.GetComponentsInChildren<PlayerContainerObject>();
+
+        foreach (var player in playerObjects)
+        {
+            Destroy(player.gameObject);
+        }
+    }
+
     private void WriteToLeaderboard()
     {
+        loadingIcon.SetActive(false);
+
         Debug.Log("writing to leaderboard");
         int rank = 0;
         foreach (var item in players.OrderByDescending(i => i.Value))

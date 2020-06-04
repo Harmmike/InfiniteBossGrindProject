@@ -373,6 +373,7 @@ MonoBehaviour:
   availableSkillsPanel: {fileID: 1133467833}
   newSkillsPanel: {fileID: 205767215}
   saveSuccessPanel: {fileID: 549988757}
+  leaderboardPanel: {fileID: 0}
   megaBossButton: {fileID: 2043844900}
   normalBossButton: {fileID: 1940702134}
   allPanels: []
@@ -4862,7 +4863,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 89333780}
-        m_MethodName: NormalBoss_Button
+        m_MethodName: OfflineNormalBoss_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5288,7 +5289,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 89333780}
-        m_MethodName: MegaBoss_Button
+        m_MethodName: OfflineMegaBoss_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

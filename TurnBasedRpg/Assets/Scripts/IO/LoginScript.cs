@@ -8,6 +8,9 @@ public class LoginScript : MonoBehaviour
     public readonly string LOGIN_URL = "https://harmsoft.000webhostapp.com/login.php";
     public readonly string REGISTER_URL = "https://harmsoft.000webhostapp.com/register.php";
 
+    public GameObject errorConnectingPanel;
+    public GameObject invalidNamePassPanel;
+
     public IEnumerator ProcessRequest(string username, string password, string url)
     {
         if(url == LOGIN_URL)
@@ -23,6 +26,7 @@ public class LoginScript : MonoBehaviour
                 if (request.isNetworkError)
                 {
                     Debug.Log(request.error);
+                    errorConnectingPanel.SetActive(true);
                 }
                 else
                 {
@@ -34,6 +38,8 @@ public class LoginScript : MonoBehaviour
                     PlayerDataUnit player = parser.ParsePlayerData(request.downloadHandler.text);
 
                     PlayerDataTransfer.SavePlayerData(player);
+
+                    PlayerDataTransfer.IsOnline = true;
 
                     //Load OnlineTownScene
                     SceneManager.LoadScene(4);
@@ -58,6 +64,7 @@ public class LoginScript : MonoBehaviour
                 if (request.isNetworkError)
                 {
                     Debug.Log(request.error);
+                    errorConnectingPanel.SetActive(true);
                 }
                 else
                 {
@@ -82,5 +89,15 @@ public class LoginScript : MonoBehaviour
         #endregion
 
         Debug.Log("response processed");
+    }
+
+    public void OnClick_CloseConnectionErrorPanel()
+    {
+        errorConnectingPanel.SetActive(false);
+    }
+
+    public void OnClick_CloseInvalidNamePassPanel()
+    {
+        invalidNamePassPanel.SetActive(false);
     }
 }

@@ -13,6 +13,8 @@ public static class PlayerDataTransfer
     public static int AvailableStatPoints { get; set; }
     public static int AvailableSkillPoints { get; set; }
 
+    public static bool IsOnline { get; set; }
+
     public static List<Skill> KnownSkills = new List<Skill>();
     public static List<Skill> EquippedSkills = new List<Skill>();
 

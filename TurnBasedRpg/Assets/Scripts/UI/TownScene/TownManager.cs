@@ -23,16 +23,29 @@ public class TownManager : MonoBehaviour
         allPanels.Add(availableSkillsPanel);
         allPanels.Add(newSkillsPanel);
         allPanels.Add(saveSuccessPanel);
-        allPanels.Add(leaderboardPanel);
     }
 
-    public void NormalBoss_Button()
+    public void OfflineNormalBoss_Button()
     {
+        PlayerDataTransfer.IsOnline = false;
         SceneManager.LoadScene(2);
     }
 
-    public void MegaBoss_Button()
+    public void OnlineNormalBoss_Button()
     {
+        PlayerDataTransfer.IsOnline = true;
+        SceneManager.LoadScene(2);
+    }
+
+    public void OfflineMegaBoss_Button()
+    {
+        PlayerDataTransfer.IsOnline = false;
+        SceneManager.LoadScene(3);
+    }
+
+    public void OnlineMegaBoss_Button()
+    {
+        PlayerDataTransfer.IsOnline = true;
         SceneManager.LoadScene(3);
     }
 
@@ -122,12 +135,6 @@ public class TownManager : MonoBehaviour
     #region Online
     public void Leaderboards_Button()
     {
-        
-        //if (CheckForOpenPanels())
-        //{
-        //    return;
-        //}
-
         megaBossButton.gameObject.SetActive(false);
         normalBossButton.gameObject.SetActive(false);
 
@@ -139,7 +146,9 @@ public class TownManager : MonoBehaviour
 
     public void OnlineSave_Button()
     {
-        Debug.Log("Online save");
+        Debug.Log("online save button pressed");
+        //SaveScript.OnlineSaveData(PlayerDataTransfer.LoadPlayerData());
+        StartCoroutine(SaveScript.OnlineSaveData(PlayerDataTransfer.LoadPlayerData()));
         StartCoroutine(SaveSuccessRoutine());
     }
     #endregion

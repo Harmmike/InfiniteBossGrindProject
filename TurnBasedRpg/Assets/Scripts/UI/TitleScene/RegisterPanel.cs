@@ -24,6 +24,7 @@ public class RegisterPanel : MonoBehaviour
         else
         {
             //set a warning
+            loginScript.invalidNamePassPanel.SetActive(true);
             return;
         }
     }
