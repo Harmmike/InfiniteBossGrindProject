@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager.Requests;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WebParser : MonoBehaviour
@@ -17,7 +15,10 @@ public class WebParser : MonoBehaviour
 
             foreach (var skill in skills)
             {
-                kSkills.Add(skill);
+                if (skill != "-" && !string.IsNullOrEmpty(skill))
+                {
+                    kSkills.Add(skill);
+                }
             }
         }
 
@@ -27,7 +28,10 @@ public class WebParser : MonoBehaviour
 
             foreach (var skill in skills)
             {
-                eSkills.Add(skill);
+                if(skill != "-" && !string.IsNullOrEmpty(skill))
+                {
+                    eSkills.Add(skill);
+                }
             }
         }
          
@@ -55,10 +59,10 @@ public class WebParser : MonoBehaviour
         player.unitSpeed = int.Parse(parsedData[3]);
         player.unitIntelligence = int.Parse(parsedData[4]);
         player.maxHP = float.Parse(parsedData[5]);
-        player.totalGold = 0;
-        player.currentExp = 0;
-        player.availableSkillPoints = 0;
-        player.availableStatPoints = 0;
+        player.totalGold = int.Parse(parsedData[6]);
+        player.currentExp = int.Parse(parsedData[7]);
+        player.availableSkillPoints = int.Parse(parsedData[8]);
+        player.availableStatPoints = int.Parse(parsedData[9]);
 
         foreach (var skillId in knownSkills)
         {

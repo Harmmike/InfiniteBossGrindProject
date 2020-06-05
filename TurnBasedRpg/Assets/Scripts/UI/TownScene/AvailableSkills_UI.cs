@@ -61,8 +61,10 @@ public class AvailableSkills_UI : MonoBehaviour
             {
                 if (skillIcon.skillID == skill.SkillID)
                 {
+                    
                     skillSlot.icon = skillIcon.GetComponent<Image>();
                     skillSlot.GetComponentInChildren<Image>().sprite = skillSlot.icon.sprite;
+                    Debug.Log("Getting skill icon for: " + skillIcon.skillID);
                 }
             }
 

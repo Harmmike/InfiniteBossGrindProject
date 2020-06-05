@@ -94,6 +94,23 @@ public static class SaveScript
         form.AddField("statpoints", player.availableStatPoints);
         form.AddField("skillpoints", player.availableSkillPoints);
 
+        string knownSkillsString = "";
+        string equippedSkillString = "";
+
+        foreach (var skill in player.knownSkills)
+        {
+            string temp = knownSkillsString;
+            knownSkillsString = $"{temp}-{skill.SkillID}";
+        }
+        form.AddField("knownskills", knownSkillsString);
+
+        foreach (var skill in player.equippedSkills)
+        {
+            string temp = equippedSkillString;
+            equippedSkillString = $"{temp}-{skill.SkillID}";
+        }
+        form.AddField("equippedskills", equippedSkillString);
+
         using (UnityWebRequest request = UnityWebRequest.Post(SAVEPLAYER_URL, form))
         {
             yield return request.SendWebRequest();
